@@ -14,15 +14,14 @@
         <el-input type="password" v-model="form.password"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">登录</el-button>
+        <el-button type="primary" @click="onSubmit" :loading="isLoding">登录</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-import request from '@/utils/request'
-import qs from 'qs'
+import { login } from '@/services/user'
 export default {
   name: 'Login',
   data () {
@@ -42,7 +41,8 @@ export default {
           { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 6, max: 16, message: '密码长度为 6 到 18 位', trigger: 'blur' }
         ]
-      }
+      },
+      isLoding: false
     }
   },
   methods: {
@@ -52,13 +52,9 @@ export default {
         // 1.校验成功
         await this.$refs.form.validate()
         // 2.发送请求
-        const { data } = await request({
-          method: 'POST',
-          heaher: { 'content-type': 'application/x-www-form-urlencoded' },
-          url: '/front/user/login',
-          // urlencoded 格式：名=值&名=值。使用qs进行转换
-          data: qs.stringify(this.form)
-        })
+        this.isLoding = true
+        const { data } = await login(this.form)
+        this.isLoding = false
         // 3.成功处理
         if (data.state === 1) {
           this.$router.push({
