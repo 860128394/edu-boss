@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+// 引入store
+import store from '@/store'
 
 Vue.use(VueRouter)
 
@@ -12,6 +14,7 @@ const routes = [
   {
     path: '/',
     component: () => import('@/views/layout/index'),
+    meta: { requiresAuth: true }, // 路由验证，根目录下的所有路由都需要登录
     children: [
       {
         path: '',
@@ -64,6 +67,24 @@ const routes = [
 
 const router = new VueRouter({
   routes
+})
+
+// 路由守卫。to 访问到，from 从哪开始
+router.beforeEach((to, from, next) => {
+  // 验证路由是否需要进行 身份验证
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // 验证登录信息是否储存
+    if (!store.state.user) {
+      // 未登录
+      next({
+        name: 'login'
+      })
+    } else {
+      next()
+    }
+  } else {
+    next() // 确保一定要调用 next()
+  }
 })
 
 export default router

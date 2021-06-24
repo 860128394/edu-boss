@@ -57,10 +57,12 @@ export default {
         this.isLoding = false
         // 3.成功处理
         if (data.state === 1) {
+          this.$message.success('登录成功')
+          // 将用户信息进行保存
+          this.$store.commit('setUser', data.content)
           this.$router.push({
             name: 'home'
           })
-          this.$message.success('登录成功')
         } else {
           this.$message.error('登录失败')
         }
