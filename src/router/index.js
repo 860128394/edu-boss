@@ -77,7 +77,11 @@ router.beforeEach((to, from, next) => {
     if (!store.state.user) {
       // 未登录
       next({
-        name: 'login'
+        name: 'login',
+        query: {
+          // 将本次路由的fullPath 传递给login
+          redirect: to.fullPath
+        }
       })
     } else {
       next()

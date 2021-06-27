@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from '@/store'
 
 // 创建一个axios实例
 const request = axios.create({
@@ -17,6 +18,12 @@ function getBaseURL (url) {
 // 请求拦截器
 request.interceptors.request.use(function (config) {
   config.baseURL = getBaseURL(config.url)
+
+  // 统一设置token信息
+  const { user } = store.state
+  if (user && user.access_token) {
+    config.headers.Authorization = user.access_token
+  }
   return config
 })
 

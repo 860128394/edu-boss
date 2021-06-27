@@ -60,9 +60,8 @@ export default {
           this.$message.success('登录成功')
           // 将用户信息进行保存
           this.$store.commit('setUser', data.content)
-          this.$router.push({
-            name: 'home'
-          })
+          // 根据存储的redirect 数据进行路由跳转
+          this.$router.push(this.$route.query.redirect || '/')
         } else {
           this.$message.error('登录失败')
         }

@@ -10,6 +10,7 @@ export default new Vuex.Store({
     // user: null
   },
   mutations: {
+    // 保存用户信息
     setUser (state, payload) {
       // 转化为对象后再进行保存
       state.user = JSON.parse(payload)
