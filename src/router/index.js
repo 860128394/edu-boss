@@ -55,6 +55,11 @@ const routes = [
         path: '/advert-space',
         name: 'advert-space',
         component: () => import('@/views/advert-space/index')
+      },
+      {
+        path: '/menu/create',
+        name: 'menu-create',
+        component: () => import('@/views/menu/create')
       }
     ]
   },
