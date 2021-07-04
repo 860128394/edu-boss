@@ -50,7 +50,6 @@ export default {
     async loadUserInfo () {
       const { data } = await getUserInfo()
       this.userInfo = data.content
-      console.log(data)
     },
     // 退出方法
     handleLogout () {

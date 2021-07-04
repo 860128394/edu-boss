@@ -12,9 +12,18 @@
           <el-input v-model="form.href"></el-input>
         </el-form-item>
         <el-form-item label="上级菜单">
-          <el-select v-model="form.parentID" placeholder="请选择上级菜单">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+          <el-select v-model="form.parentId" placeholder="请选择上级菜单">
+            <!-- 无上级菜单 -->
+            <el-option
+              label="无上级菜单"
+              :value="-1">
+            </el-option>
+            <!-- 选择一级菜单 -->
+            <el-option v-for="item in parentMenuList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="描述">
@@ -42,24 +51,44 @@
 </template>
 
 <script>
+import { getEditMenuInfo, createOrUpdateMenu } from '@/services/menu'
 export default {
   name: 'menuCreate',
   data () {
     return {
       form: {
-        parentID: 1,
+        parentId: 1,
         name: '',
         href: '',
         icon: '',
-        orderNum: 5,
+        orderNum: 3,
         description: '',
-        shown: ''
-      }
+        shown: true
+      },
+      parentMenuList: []
     }
   },
+  created () {
+    // 加载上级菜单信息
+    this.loadMenuInfo()
+  },
   methods: {
-    onSubmit () {
-      console.log('submit!')
+    async onSubmit () {
+      const { data } = await createOrUpdateMenu(this.form)
+      console.log(data)
+      if (data.code === '000000') {
+        this.$message.success('提交成功')
+        this.$router.push({
+          name: 'menu'
+        })
+      }
+    },
+    async loadMenuInfo () {
+      // 请求上级菜单数据
+      const { data } = await getEditMenuInfo()
+      if (data.code === '000000') {
+        this.parentMenuList = data.data.parentMenuList
+      }
     }
   }
 }
