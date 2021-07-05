@@ -1,5 +1,5 @@
 <template>
-  <div class="advert">广告管理</div>
+  <div class="advert">广告管理页</div>
 </template>
 
 <script>
