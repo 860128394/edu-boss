@@ -20,3 +20,20 @@ export const createOrUpdateMenu = data => {
     data
   })
 }
+
+// 获取所有菜单
+export const getAllMenus = data => {
+  return request({
+    method: 'GET',
+    url: '/boss/menu/getAll',
+    data
+  })
+}
+
+// 删除菜单
+export const deleteMenu = id => {
+  return request({
+    method: 'DELETE',
+    url: `/boss/menu/${id}`
+  })
+}

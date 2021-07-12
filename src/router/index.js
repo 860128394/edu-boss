@@ -60,6 +60,11 @@ const routes = [
         path: '/menu/create',
         name: 'menu-create',
         component: () => import('@/views/menu/create')
+      },
+      {
+        path: '/menu/:id/edit',
+        name: 'menu-edit',
+        component: () => import('@/views/menu/edit')
       }
     ]
   },

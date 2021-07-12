@@ -1,20 +1,19 @@
 <template>
-  <div class="menu-create">
-     <create-or-edit></create-or-edit>
+  <div class="menu-edit">
+    <create-or-edit :is-edit="true"></create-or-edit>
   </div>
 </template>
 
 <script>
 import CreateOrEdit from './components/CreateOrEdit.vue'
 export default {
-  name: 'menuCreate',
+  name: 'MenuEdit',
   components: {
     CreateOrEdit
-  },
-  data () {
-    return {}
   }
 }
 </script>
 
-<style></style>
+<style scoped>
+
+</style>
